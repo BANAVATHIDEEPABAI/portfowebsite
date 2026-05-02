@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.reveal-up,
+.skill-item,
+.exp-entry,
+.contact-inner {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-up.animate-in,
+.skill-item.animate-in,
+.exp-entry.animate-in,
+.contact-inner.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
