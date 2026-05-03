@@ -9,7 +9,7 @@ export const portfolioData: PortfolioData = {
     "github": "https://github.com/BANAVATHIDEEPABAI",
     "twitter": "",
     "website": "",
-    "linkedin": "https://linkedin.com/in/banavathi-deepa-bai-5a43203799"
+    "linkedin": "https://linkedin.com/in/banavathi-deepa-bai-5a4320379"
   },
   "phone": "6305105744",
   "skills": [
@@ -23,7 +23,8 @@ export const portfolioData: PortfolioData = {
     "Github",
     "Responsive Design",
     "Ai-tools",
-    "AI/ML"
+    "AI/ML",
+    "Backend Development"
   ],
   "location": "Anthapuram,Andhra Pradesh",
   "projects": [
@@ -34,19 +35,13 @@ export const portfolioData: PortfolioData = {
       "description": "Developed a live Employee Portal application that enables efficient management of employee data, tasks, and resources. Implemented a virtual download feature allowing users to securely access and download files within the system. Focused on creating a user-friendly interface, smooth functionality, and reliable data handling to enhance organizational productivity.",
       "technologies": [
         "Electron",
-        "React",
-        "Html",
-        "css",
-        "javascript",
-        "Mongodb",
-        "Nodejs",
-        "Express js"
+        "Frontnend Backend Technologies"
       ]
     },
     {
       "url": "",
       "name": "personal portfolio website",
-      "github": "",
+      "github": "https://github.com/BANAVATHIDEEPABAI/portfowebsite",
       "description": "Developed a personal portfolio website to showcase my skills, projects, and experience as a software developer. The website features a clean and responsive design, highlighting my work in full stack development and AI/ML. It includes sections for projects, technical skills, and contact information, providing a comprehensive overview of my capabilities and interests.",
       "technologies": [
         "Ai-tool and git",
@@ -113,5 +108,12 @@ export const portfolioData: PortfolioData = {
       "description": "Worked as a Team Leader for a full stack development project, where I led a team in designing and building scalable web applications. Managed both frontend and backend development, ensuring smooth integration and efficient performance. Coordinated task distribution, guided team members, and maintained project timelines while following best coding practices. Focused on delivering user-friendly, high-quality solutions through collaboration and problem-solving."
     }
   ],
-  "certifications": []
+  "certifications": [
+    {
+      "name": "Full Stack Web Development",
+      "issuer": "LIFEBOXNEXTGEN PVT",
+      "date": "2025",
+      "description": "Completed a comprehensive full stack web development program covering frontend and backend technologies including HTML, CSS, JavaScript, React, Node.js, and MongoDB."
+    }
+  ]
 };

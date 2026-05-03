@@ -2,7 +2,16 @@
 
 import { portfolioData } from './data';
 import { useEffect, useRef } from 'react';
-import { Mail, Github, Linkedin, ArrowDown, Download } from 'lucide-react';
+import { Mail, Github, Linkedin, ArrowDown, Download, MessageCircle } from 'lucide-react';
+
+// Pre-computed outside component to avoid recalculation on every render
+const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
+    left: `${(i * 7.3 + 3) % 100}%`,
+    top: `${(i * 13.7 + 5) % 100}%`,
+    duration: `${8 + (i % 5) * 2.4}s`,
+    delay: `${(i * 0.7) % 5}s`,
+    color: i % 3 === 0 ? 'rgba(139,92,246,0.6)' : i % 3 === 1 ? 'rgba(255,255,255,0.4)' : 'rgba(16,185,129,0.5)',
+}));
 
 export default function Page() {
     const d = portfolioData;
@@ -229,9 +238,9 @@ export default function Page() {
             <div className="film-grain" />
 
             {/* Navigation */}
-            <nav className="fixed top-0 w-full z-50 px-6 py-5" style={{ background: 'rgba(6,4,15,0.6)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <nav className="fixed top-0 w-full z-50 px-6 py-5" style={{ background: 'rgba(6,4,15,0.85)', borderBottom: '1px solid rgba(255,255,255,0.05)', willChange: 'transform' }}>
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <span className="text-sm font-bold tracking-[0.3em] uppercase" style={{ background: 'linear-gradient(90deg, #a855f7, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{d.name?.split(' ')[0] || 'Portfolio'}</span>
+                    <span className="text-sm font-bold tracking-[0.3em] uppercase" style={{ background: 'linear-gradient(90deg, #a855f7, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{d.name?.split(' ')[1] || 'Portfolio'}</span>
                     <div className="hidden md:flex gap-10 text-xs tracking-[0.2em] uppercase font-medium">
                         {['Technologies', 'Projects', 'Experience', 'Contact'].map(item => (
                             <a key={item} href={`#${item.toLowerCase()}`} className="text-white/50 hover:text-white transition-colors duration-300">{item}</a>
@@ -246,17 +255,16 @@ export default function Page() {
 
                 {/* Floating particles */}
                 <div className="absolute inset-0 overflow-hidden mix-blend-screen">
-                    {[...Array(30)].map((_, i) => (
+                    {PARTICLES.map((p, i) => (
                         <div
                             key={i}
                             className="absolute w-[2px] h-[2px] rounded-full"
                             style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                background: i % 3 === 0 ? 'rgba(139,92,246,0.6)' : i % 3 === 1 ? 'rgba(255,255,255,0.4)' : 'rgba(16,185,129,0.5)',
-                                animation: `float-particle ${8 + Math.random() * 12}s linear infinite`,
-                                animationDelay: `${Math.random() * 5}s`,
-                                filter: 'blur(0.5px)',
+                                left: p.left,
+                                top: p.top,
+                                background: p.color,
+                                animation: `float-particle ${p.duration} linear infinite`,
+                                animationDelay: p.delay,
                             }}
                         />
                     ))}
@@ -309,14 +317,14 @@ export default function Page() {
             </section>
 
             {/* ===== TECHNOLOGIES ===== */}
-            <section id="technologies" className="relative py-32 px-6 z-10">
+            <section id="technologies" className="relative py-16 px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Technologies</h2>
                         <div className="section-divider" />
                     </div>
                     <div className="reveal-up grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {Array.from(new Set(d.projects.flatMap(p => p.technologies))).map((tech, i) => (
+                        {d.skills.map((tech, i) => (
                             <div
                                 key={tech}
                                 className="highlight-card group flex items-center gap-4 p-5 rounded-xl"
@@ -332,7 +340,7 @@ export default function Page() {
             </section>
 
             {/* ===== PROJECTS / WORK ===== */}
-            <section id="projects" className="relative py-32 px-6 z-10">
+            <section id="projects" className="relative py-16 px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Projects</h2>
@@ -373,11 +381,22 @@ export default function Page() {
             </section>
 
             {/* ===== EXPERIENCE ===== */}
-            <section id="experience" className="relative py-32 px-6 z-10">
+            <section id="experience" className="relative py-16 px-6 z-10">
                 <div className="max-w-4xl mx-auto">
-                    <div className="reveal-up mb-12">
-                        <h2 className="section-heading">Experience</h2>
-                        <div className="section-divider" />
+                    <div className="reveal-up mb-12 flex items-end justify-between flex-wrap gap-4">
+                        <div>
+                            <h2 className="section-heading">Experience</h2>
+                            <div className="section-divider" />
+                        </div>
+                        <a
+                            href="/EXPERIENCE.pdf"
+                            download="EXPERIENCE.pdf"
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all duration-300"
+                            style={{ background: 'linear-gradient(135deg,#7828ff,#06b6d4)', boxShadow: '0 0 20px rgba(120,40,255,0.35)' }}
+                        >
+                            <Download className="w-4 h-4" />
+                            <span>Download Experience</span>
+                        </a>
                     </div>
                     <div className="space-y-6">
                         {d.experience.map((exp, i) => (
@@ -408,7 +427,7 @@ export default function Page() {
             </section>
 
             {/* ===== EDUCATION ===== */}
-            <section className="relative py-32 px-6 z-10">
+            <section className="relative py-16 px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Education</h2>
@@ -427,7 +446,7 @@ export default function Page() {
             </section>
 
             {/* ===== CONTACT ===== */}
-            <section id="contact" className="relative py-40 px-6 z-10">
+            <section id="contact" className="relative py-16 px-6 z-10">
                 <div className="contact-inner max-w-3xl mx-auto text-center">
                     <p className="text-xs tracking-[0.5em] uppercase text-white/30 mb-8">Get in Touch</p>
                     <h2 className="text-glow mb-8" style={{
@@ -442,15 +461,6 @@ export default function Page() {
                         Ready to bring your vision to life? Let&apos;s talk.
                     </p>
                     <div className="flex justify-center gap-6 flex-wrap">
-                        <a
-                            href="/resume.pdf"
-                            download="Banavathi_Deepa_Bai_Resume.pdf"
-                            className="group flex items-center gap-3 px-8 py-4 rounded-full font-medium transition-all duration-300"
-                            style={{ background: 'linear-gradient(135deg,#7828ff,#06b6d4)', boxShadow: '0 0 30px rgba(120,40,255,0.4)' }}
-                        >
-                            <Download className="w-5 h-5" />
-                            <span className="text-sm tracking-[0.1em] uppercase font-medium">Download Resume</span>
-                        </a>
                         <a href={`mailto:${d.email}`} className="group flex items-center gap-3 px-8 py-4 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-500">
                             <Mail className="w-5 h-5" />
                             <span className="text-sm tracking-[0.1em] uppercase font-medium">Email</span>
@@ -467,12 +477,21 @@ export default function Page() {
                                 <span className="text-sm tracking-[0.1em] uppercase font-medium">LinkedIn</span>
                             </a>
                         )}
+                        <a
+                            href="https://wa.me/916305105744"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-3 px-8 py-4 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-500"
+                        >
+                            <MessageCircle className="w-5 h-5" />
+                            <span className="text-sm tracking-[0.1em] uppercase font-medium">WhatsApp</span>
+                        </a>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="relative z-10 py-12 px-6" style={{ background: 'rgba(6,4,15,0.8)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <footer className="relative z-10 py-12 px-6" style={{ background: 'rgba(6,4,15,0.95)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-2 text-xs text-white/30 tracking-widest uppercase">
                     <span>© {new Date().getFullYear()} {d.name}. All Rights Reserved.</span>
                     <span>Designed &amp; Built by {d.name.split(' ')[0]}</span>
