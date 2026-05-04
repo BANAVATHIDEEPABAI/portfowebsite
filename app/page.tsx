@@ -2,7 +2,7 @@
 
 import { portfolioData } from './data';
 import { useEffect, useRef } from 'react';
-import { Mail, Github, Linkedin, ArrowDown, Download, MessageCircle } from 'lucide-react';
+import { Mail, Github, Linkedin, Download, MessageCircle } from 'lucide-react';
 
 // Pre-computed outside component to avoid recalculation on every render
 const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
@@ -167,6 +167,10 @@ export default function Page() {
                     margin: 1.5rem 0 3rem 0;
                 }
 
+                section[id] {
+                    scroll-margin-top: 5.5rem;
+                }
+
                 .highlight-card {
                     position: relative;
                     overflow: hidden;
@@ -217,6 +221,111 @@ export default function Page() {
                     transform: translateX(6px);
                 }
 
+                .hero-avatar-ring {
+                    position: absolute;
+                    inset: -3px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #a855f7, #06b6d4, #ff3cb4, #a855f7);
+                    background-size: 300% 300%;
+                    animation: ringRotate 4s linear infinite;
+                    z-index: -1;
+                }
+
+                @keyframes ringRotate {
+                    0%   { background-position: 0% 50%; }
+                    50%  { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+
+                .hero-avatar-ring::after {
+                    content: '';
+                    position: absolute;
+                    inset: 3px;
+                    border-radius: 50%;
+                    background: #06040f;
+                }
+
+                .hero-wrapper { display: grid; gap: 2.5rem; align-items: center; }
+                @media (min-width: 768px) { .hero-wrapper { grid-template-columns: 1.05fr 0.95fr; } }
+                .hero-panel { position: relative; z-index: 1; }
+                .hero-label { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.25rem; border-radius: 999px; font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.7); background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2); margin-bottom: 1.5rem; }
+                .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2.4rem); line-height: 1.1; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.4rem; color: #fff; text-shadow: 0 14px 50px rgba(0,0,0,0.25); }
+                .hero-title span { display: block; }
+                .hero-copy { max-width: 42rem; color: rgba(255,255,255,0.78); margin-bottom: 2rem; line-height: 1.75; font-size: 0.95rem; }
+                .hero-cta-group { display: inline-flex; flex-wrap: wrap; gap: 1rem; }
+                .hero-cta { display: inline-flex; align-items: center; gap: 0.75rem; border-radius: 999px; padding: 0.85rem 1.6rem; font-size: 0.9rem; font-weight: 600; transition: transform 0.25s ease; }
+                .hero-cta-primary { background: linear-gradient(135deg, #7c3aed, #0ea5e9); color: #fff; box-shadow: 0 22px 60px rgba(120,40,255,0.25); }
+                .hero-cta-secondary { border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.92); }
+                .hero-cta:hover { transform: translateY(-2px); }
+                .hero-avatar-shell { position: relative; width: min(100%, 360px); margin: 0 auto; }
+                .hero-avatar-card { position: relative; padding: 1.5rem; border-radius: 2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); overflow: visible; }
+                .hero-avatar-inner { position: relative; width: 100%; padding-top: 115%; border-radius: 1.2rem; overflow: hidden; background: #0c0618; }
+                .hero-avatar-inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.4s ease; }
+                .hero-avatar-inner img:hover { transform: scale(1.04); }
+                .hero-glow-ring { position: absolute; inset: -1.4rem; border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,0.22), transparent 55%); filter: blur(28px); z-index: 0; }
+                .hero-badge { position: absolute; left: 50%; bottom: -1.2rem; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.2rem; border-radius: 999px; background: rgba(15,10,30,0.95); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.75rem; font-weight: 600; white-space: nowrap; z-index: 2; }
+                .hero-badge-dot { width: 0.6rem; height: 0.6rem; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,0.6); animation: pulse-dot 2s ease-in-out infinite; }
+                .hero-social { display: flex; gap: 1rem; margin-top: 1.8rem; }
+                .hero-social a { color: rgba(255,255,255,0.35); transition: color 0.3s ease; }
+                .hero-social a:hover { color: #fff; }
+
+                .scroll-btn {
+                    position: absolute;
+                    bottom: 0.3rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0.4rem;
+                    cursor: pointer;
+                    z-index: 10;
+                    text-decoration: none;
+                }
+
+                .scroll-btn-ring {
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    border: 1.5px solid rgba(168,85,247,0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                    background: rgba(168,85,247,0.08);
+                }
+
+                .scroll-btn:hover .scroll-btn-ring {
+                    border-color: #a855f7;
+                    box-shadow: 0 0 20px rgba(168,85,247,0.5), 0 0 40px rgba(168,85,247,0.2);
+                    background: rgba(168,85,247,0.15);
+                }
+
+                .scroll-btn-arrow {
+                    width: 10px;
+                    height: 10px;
+                    border-right: 2px solid #a855f7;
+                    border-bottom: 2px solid #a855f7;
+                    transform: rotate(45deg) translateY(-2px);
+                    animation: arrowBounce 1.5s ease-in-out infinite;
+                }
+
+                @keyframes arrowBounce {
+                    0%, 100% { transform: rotate(45deg) translateY(-2px); opacity: 1; }
+                    50%       { transform: rotate(45deg) translateY(3px);  opacity: 0.5; }
+                }
+
+                .scroll-btn-text {
+                    font-size: 0.6rem;
+                    letter-spacing: 0.25em;
+                    text-transform: uppercase;
+                    color: rgba(255,255,255,0.35);
+                    transition: color 0.3s ease;
+                }
+
+                .scroll-btn:hover .scroll-btn-text { color: #a855f7; }
+
                 .film-grain {
                     position: fixed;
                     inset: 0;
@@ -237,6 +346,7 @@ export default function Page() {
             <div className="grid-overlay" />
             <div className="film-grain" />
 
+            {/* Bubbles */}
             {/* Navigation */}
             <nav className="fixed top-0 w-full z-50 px-6 py-5" style={{ background: 'rgba(6,4,15,0.85)', borderBottom: '1px solid rgba(255,255,255,0.05)', willChange: 'transform' }}>
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -250,70 +360,66 @@ export default function Page() {
             </nav>
 
             {/* ===== HERO ===== */}
-            <section ref={heroRef} className="relative h-[100vh] flex items-center justify-center overflow-hidden z-10">
-                <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(120,40,255,0.12) 0%, transparent 70%)' }} />
-
-                {/* Floating particles */}
+            <section ref={heroRef} className="relative min-h-[100vh] flex items-center overflow-hidden z-10 px-6 pt-24 pb-16">
+                <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 70% at 60% 50%, rgba(120,40,255,0.1) 0%, transparent 70%)' }} />
                 <div className="absolute inset-0 overflow-hidden mix-blend-screen">
                     {PARTICLES.map((p, i) => (
-                        <div
-                            key={i}
-                            className="absolute w-[2px] h-[2px] rounded-full"
-                            style={{
-                                left: p.left,
-                                top: p.top,
-                                background: p.color,
-                                animation: `float-particle ${p.duration} linear infinite`,
-                                animationDelay: p.delay,
-                            }}
+                        <div key={i} className="absolute w-[2px] h-[2px] rounded-full"
+                            style={{ left: p.left, top: p.top, background: p.color, animation: `float-particle ${p.duration} linear infinite`, animationDelay: p.delay }}
                         />
                     ))}
                 </div>
+                <style dangerouslySetInnerHTML={{ __html: `@keyframes float-particle { 0%{transform:translateY(0) translateX(0);opacity:0} 20%{opacity:1} 80%{opacity:1} 100%{transform:translateY(-100vh) translateX(50px);opacity:0} }` }} />
 
-                <style dangerouslySetInnerHTML={{ __html: `
-                    @keyframes float-particle {
-                        0% { transform: translateY(0) translateX(0); opacity: 0; }
-                        20% { opacity: 1; }
-                        80% { opacity: 1; }
-                        100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-                    }
-                `}} />
+                <div ref={heroTextRef} className="relative z-10 max-w-6xl mx-auto w-full hero-wrapper">
 
-                <div ref={heroTextRef} className="relative z-10 text-center px-6 max-w-6xl w-full">
-                    <div className="overflow-hidden mb-8">
-                        <p className="text-[10px] md:text-xs tracking-[0.6em] uppercase font-medium syne" style={{ background: 'linear-gradient(90deg, #a855f7, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{d.role}</p>
+                    {/* LEFT — Text */}
+                    <div className="hero-panel">
+                        <div className="hero-label">{d.role}</div>
+                        <h1 className="hero-title">
+                            {d.name.toUpperCase()}
+                        </h1>
+                        <p className="hero-copy">{d.bio}</p>
+                        <div className="hero-cta-group">
+                            <a href="/resume.pdf" download="resume.pdf" className="hero-cta hero-cta-primary">
+                                <Download className="w-4 h-4" />
+                                <span>Download Resume</span>
+                            </a>
+                            <a href="#projects" className="hero-cta hero-cta-secondary">
+                                Explore My Work
+                            </a>
+                        </div>
+                        <div className="hero-social">
+                            {d.links.github && <a href={d.links.github} target="_blank" rel="noopener noreferrer"><Github className="w-5 h-5" /></a>}
+                            {d.links.linkedin && <a href={d.links.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin className="w-5 h-5" /></a>}
+                            <a href={`mailto:${d.email}`}><Mail className="w-5 h-5" /></a>
+                            <a href="https://wa.me/916305105744" target="_blank" rel="noopener noreferrer"><MessageCircle className="w-5 h-5" /></a>
+                        </div>
                     </div>
-                    <h1 className="text-glow" style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: 'clamp(1.8rem, 5vw, 3.5rem)',
-                        fontWeight: 400,
-                        lineHeight: 1.1,
-                        letterSpacing: '-0.02em',
-                    }}>
-                        {d.name}
-                    </h1>
-                    <p className="mt-8 text-white/60 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-                        {d.bio}
-                    </p>
-                    <div className="mt-12 flex items-center justify-center gap-6 flex-wrap">
-                        <a href="#technologies" className="group flex items-center gap-3 text-sm tracking-[0.15em] uppercase text-white/60 hover:text-white transition-colors duration-300">
-                            <span>Explore</span>
-                            <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
-                        </a>
-                        <a
-                            href="/resume.pdf"
-                            download="resume.pdf"
-                            className="group flex items-center gap-3 px-6 py-3 rounded-full text-sm tracking-[0.15em] uppercase font-medium transition-all duration-300"
-                            style={{ background: 'linear-gradient(135deg, #7828ff, #06b6d4)', boxShadow: '0 0 30px rgba(120,40,255,0.4)' }}
-                        >
-                            <Download className="w-4 h-4" />
-                            <span>Resume</span>
-                        </a>
+
+                    {/* RIGHT — Avatar */}
+                    <div className="hero-avatar-shell">
+                        <div className="hero-avatar-card">
+                            <div className="hero-glow-ring" />
+                            <div className="hero-avatar-inner">
+                                <img src="/MY1.jpeg" alt={d.name} />
+                            </div>
+                            <div className="hero-badge">
+                                <span className="hero-badge-dot" />
+                                <span>Open to Work</span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
+                <div className="absolute inset-x-0 bottom-0 h-32 cinematic-gradient pointer-events-none" />
 
-                {/* Bottom gradient */}
-                <div className="absolute bottom-0 left-0 right-0 h-40 cinematic-gradient" />
+                <a href="#technologies" className="scroll-btn">
+                    <div className="scroll-btn-ring">
+                        <div className="scroll-btn-arrow" />
+                    </div>
+                    <span className="scroll-btn-text">Scroll</span>
+                </a>
             </section>
 
             {/* ===== TECHNOLOGIES ===== */}
@@ -389,8 +495,8 @@ export default function Page() {
                             <div className="section-divider" />
                         </div>
                         <a
-                            href="/EXPERIENCE.pdf"
-                            download="EXPERIENCE.pdf"
+                            href="/experience.pdf"
+                            download="experience.pdf"
                             className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all duration-300"
                             style={{ background: 'linear-gradient(135deg,#7828ff,#06b6d4)', boxShadow: '0 0 20px rgba(120,40,255,0.35)' }}
                         >
