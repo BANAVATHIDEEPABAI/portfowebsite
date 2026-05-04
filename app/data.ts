@@ -97,7 +97,7 @@ export const portfolioData: PortfolioData = {
     {
       "company": "LIFEBOXNEXTGEN PVT",
       "endDate": "2026",
-      "position": "Team -lead",
+      "position": "Team -Lead",
       "startDate": "2025",
       "highlights": [
         "Working on full-stack web development projects using frontend and backend technologies",
