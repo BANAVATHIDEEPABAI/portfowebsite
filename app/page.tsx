@@ -1,8 +1,9 @@
 'use client';
 
 import { portfolioData } from './data';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef ,useState} from 'react';
 import { Mail, Github, Linkedin, Download, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 // Pre-computed outside component to avoid recalculation on every render
 const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
@@ -14,6 +15,7 @@ const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
 }));
 
 export default function Page() {
+    const [menuOpen, setMenuOpen] = useState(false);
     const d = portfolioData;
     const containerRef = useRef<HTMLDivElement>(null);
     const heroRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,12 @@ export default function Page() {
                 body { background: #06040f; }
 
                 /* Animated mesh background */
+                * {
+  max-width: 100%;
+}
+  html, body {
+  overflow-x: hidden;
+}
                 .bg-mesh {
                     position: fixed;
                     inset: 0;
@@ -120,7 +128,7 @@ export default function Page() {
                 .section-heading {
                     display: inline-block;
                     position: relative;
-                    font-size: 2.5rem;
+                    font-size: clamp(1.875rem, 4vw, 2.5rem);
                     font-weight: 800;
                     letter-spacing: -0.02em;
                     background: linear-gradient(90deg, #fff 0%, #a855f7 50%, #06b6d4 100%);
@@ -245,25 +253,37 @@ export default function Page() {
                     background: #06040f;
                 }
 
-                .hero-wrapper { display: grid; gap: 2.5rem; align-items: center; }
-                @media (min-width: 768px) { .hero-wrapper { grid-template-columns: 1.05fr 0.95fr; } }
+                .hero-wrapper { display: grid; gap: 2.5rem; align-items: center; grid-template-columns: 1fr; }
+                @media (min-width: 640px) { .hero-wrapper { grid-template-columns: 1fr; } }
+                @media (min-width: 768px) { .hero-wrapper { grid-template-columns: 1.05fr 0.95fr; gap: 3rem; } }
+                @media (max-width: 640px) { .hero-wrapper { gap: 2rem; } }
                 .hero-panel { position: relative; z-index: 1; }
+                @media (max-width: 640px) { .hero-panel { margin-bottom: 2rem; } }
                 .hero-label { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.25rem; border-radius: 999px; font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.7); background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2); margin-bottom: 1.5rem; }
-                .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2.4rem); line-height: 1.1; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.4rem; color: #fff; text-shadow: 0 14px 50px rgba(0,0,0,0.25); }
+                .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.1; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.4rem; color: #fff; text-shadow: 0 14px 50px rgba(0,0,0,0.25); }
+                @media (max-width: 640px) { .hero-title { font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 1rem; } }
                 .hero-title span { display: block; }
                 .hero-copy { max-width: 42rem; color: rgba(255,255,255,0.78); margin-bottom: 2rem; line-height: 1.75; font-size: 0.95rem; }
-                .hero-cta-group { display: inline-flex; flex-wrap: wrap; gap: 1rem; }
-                .hero-cta { display: inline-flex; align-items: center; gap: 0.75rem; border-radius: 999px; padding: 0.85rem 1.6rem; font-size: 0.9rem; font-weight: 600; transition: transform 0.25s ease; }
+                @media (max-width: 640px) { .hero-copy { font-size: 0.875rem; margin-bottom: 1.5rem; } }
+                .hero-cta-group { display: inline-flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+                @media (max-width: 640px) { .hero-cta-group { flex-direction: column; width: 100%; gap: 0.75rem; } }
+                .hero-cta { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; border-radius: 999px; padding: 0.85rem 1.6rem; font-size: 0.9rem; font-weight: 600; transition: transform 0.25s ease; white-space: nowrap; }
+                @media (max-width: 640px) { .hero-cta { width: 100%; padding: 1rem 1.6rem; } }
                 .hero-cta-primary { background: linear-gradient(135deg, #7c3aed, #0ea5e9); color: #fff; box-shadow: 0 22px 60px rgba(120,40,255,0.25); }
                 .hero-cta-secondary { border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.92); }
                 .hero-cta:hover { transform: translateY(-2px); }
                 .hero-avatar-shell { position: relative; width: min(100%, 360px); margin: 0 auto; }
+                @media (max-width: 640px) { .hero-avatar-shell { width: min(100%, 280px); } }
                 .hero-avatar-card { position: relative; padding: 1.5rem; border-radius: 2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); overflow: visible; }
+                @media (max-width: 640px) { .hero-avatar-card { padding: 1rem; border-radius: 1.5rem; } }
                 .hero-avatar-inner { position: relative; width: 100%; padding-top: 115%; border-radius: 1.2rem; overflow: hidden; background: #0c0618; }
+                @media (max-width: 640px) { .hero-avatar-inner { padding-top: 110%; border-radius: 1rem; } }
                 .hero-avatar-inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.4s ease; }
                 .hero-avatar-inner img:hover { transform: scale(1.04); }
                 .hero-glow-ring { position: absolute; inset: -1.4rem; border-radius: 50%; background: radial-gradient(circle, rgba(99,102,241,0.22), transparent 55%); filter: blur(28px); z-index: 0; }
+                @media (max-width: 640px) { .hero-glow-ring { inset: -0.8rem; filter: blur(20px); } }
                 .hero-badge { position: absolute; left: 50%; bottom: -1.2rem; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.2rem; border-radius: 999px; background: rgba(15,10,30,0.95); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-size: 0.75rem; font-weight: 600; white-space: nowrap; z-index: 2; }
+                @media (max-width: 640px) { .hero-badge { bottom: -0.8rem; font-size: 0.65rem; padding: 0.5rem 1rem; } }
                 .hero-badge-dot { width: 0.6rem; height: 0.6rem; border-radius: 999px; background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,0.6); animation: pulse-dot 2s ease-in-out infinite; }
                 .hero-social { display: flex; gap: 1rem; margin-top: 1.8rem; }
                 .hero-social a { color: rgba(255,255,255,0.35); transition: color 0.3s ease; }
@@ -282,6 +302,7 @@ export default function Page() {
                     z-index: 10;
                     text-decoration: none;
                 }
+                @media (max-width: 640px) { .scroll-btn { bottom: 0.5rem; } }
 
                 .scroll-btn-ring {
                     width: 48px;
@@ -348,19 +369,69 @@ export default function Page() {
 
             {/* Bubbles */}
             {/* Navigation */}
-            <nav className="fixed top-0 w-full z-50 px-6 py-5" style={{ background: 'rgba(6,4,15,0.85)', borderBottom: '1px solid rgba(255,255,255,0.05)', willChange: 'transform' }}>
-                <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <span className="text-sm font-bold tracking-[0.3em] uppercase" style={{ background: 'linear-gradient(90deg, #a855f7, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{d.name?.split(' ')[1] || 'Portfolio'}</span>
-                    <div className="hidden md:flex gap-10 text-xs tracking-[0.2em] uppercase font-medium">
-                        {['Technologies', 'Projects', 'Experience', 'Contact'].map(item => (
-                            <a key={item} href={`#${item.toLowerCase()}`} className="text-white/50 hover:text-white transition-colors duration-300">{item}</a>
-                        ))}
-                    </div>
-                </div>
-            </nav>
+         <nav
+  className="fixed top-0 w-full z-50 px-4 sm:px-6 py-4 sm:py-5"
+  style={{
+    background: 'rgba(6,4,15,0.85)',
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    backdropFilter: 'blur(10px)',
+  }}
+>
+  <div className="max-w-7xl mx-auto flex justify-between items-center">
+
+    {/* Logo */}
+    <span
+      className="text-sm font-bold tracking-[0.3em] uppercase"
+      style={{
+        background: 'linear-gradient(90deg, #a855f7, #06b6d4)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      }}
+    >
+      {d.name?.split(' ')[1] || 'Portfolio'}
+    </span>
+
+    {/* Desktop Menu */}
+    <div className="hidden md:flex gap-10 text-xs tracking-[0.2em] uppercase font-medium">
+      {['Technologies', 'Projects', 'Experience', 'Contact'].map(item => (
+        <a
+          key={item}
+          href={`#${item.toLowerCase()}`}
+          className="text-white/50 hover:text-white transition-colors duration-300"
+        >
+          {item}
+        </a>
+      ))}
+    </div>
+
+    {/* Mobile Menu Button */}
+    <button
+      className="md:hidden text-white"
+      onClick={() => setMenuOpen(!menuOpen)}
+    >
+      {menuOpen ? <X size={22} /> : <Menu size={22} />}
+    </button>
+  </div>
+
+  {/* Mobile Dropdown */}
+  {menuOpen && (
+    <div className="md:hidden mt-4 flex flex-col items-center gap-6 py-6 border-t border-white/10">
+      {['Technologies', 'Projects', 'Experience', 'Contact'].map(item => (
+        <a
+          key={item}
+          href={`#${item.toLowerCase()}`}
+          onClick={() => setMenuOpen(false)}
+          className="text-white/70 hover:text-white text-sm tracking-widest uppercase"
+        >
+          {item}
+        </a>
+      ))}
+    </div>
+  )}
+</nav>
 
             {/* ===== HERO ===== */}
-            <section ref={heroRef} className="relative min-h-[100vh] flex items-center overflow-hidden z-10 px-6 pt-24 pb-16">
+            <section ref={heroRef} className="relative min-h-screen sm:min-h-[100vh] flex items-center overflow-hidden z-10 px-4 sm:px-6 pt-28 sm:pt-24 pb-16 sm:pb-16">
                 <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 70% at 60% 50%, rgba(120,40,255,0.1) 0%, transparent 70%)' }} />
                 <div className="absolute inset-0 overflow-hidden mix-blend-screen">
                     {PARTICLES.map((p, i) => (
@@ -380,7 +451,7 @@ export default function Page() {
                             {d.name.toUpperCase()}
                         </h1>
                         <p className="hero-copy">{d.bio}</p>
-                        <div className="hero-cta-group">
+                       <div className="hero-cta-group flex-nowrap">
                             <a href="/resume.pdf" download="resume.pdf" className="hero-cta hero-cta-primary">
                                 <Download className="w-4 h-4" />
                                 <span>Download Resume</span>
@@ -402,7 +473,7 @@ export default function Page() {
                         <div className="hero-avatar-card">
                             <div className="hero-glow-ring" />
                             <div className="hero-avatar-inner">
-                                <img src="/my2.png" alt={d.name} />
+                                <img src="/rr.png" alt={d.name} />
                             </div>
                             <div className="hero-badge">
                                 <span className="hero-badge-dot" />
@@ -423,7 +494,7 @@ export default function Page() {
             </section>
 
             {/* ===== TECHNOLOGIES ===== */}
-            <section id="technologies" className="relative py-16 px-6 z-10">
+            <section id="technologies" className="relative py-12 sm:py-16 px-4 sm:px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Technologies</h2>
@@ -446,7 +517,7 @@ export default function Page() {
             </section>
 
             {/* ===== PROJECTS / WORK ===== */}
-            <section id="projects" className="relative py-16 px-6 z-10">
+            <section id="projects" className="relative py-12 sm:py-16 px-4 sm:px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Projects</h2>
@@ -487,7 +558,7 @@ export default function Page() {
             </section>
 
             {/* ===== EXPERIENCE ===== */}
-            <section id="experience" className="relative py-16 px-6 z-10">
+            <section id="experience" className="relative py-12 sm:py-16 px-4 sm:px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12 flex items-end justify-between flex-wrap gap-4">
                         <div>
@@ -533,7 +604,7 @@ export default function Page() {
             </section>
 
             {/* ===== EDUCATION ===== */}
-            <section className="relative py-16 px-6 z-10">
+            <section className="relative py-12 sm:py-16 px-4 sm:px-6 z-10">
                 <div className="max-w-4xl mx-auto">
                     <div className="reveal-up mb-12">
                         <h2 className="section-heading">Education</h2>
@@ -552,7 +623,7 @@ export default function Page() {
             </section>
 
             {/* ===== CONTACT ===== */}
-            <section id="contact" className="relative py-16 px-6 z-10">
+            <section id="contact" className="relative py-12 sm:py-16 px-4 sm:px-6 z-10">
                 <div className="contact-inner max-w-3xl mx-auto text-center">
                     <p className="text-xs tracking-[0.5em] uppercase text-white/30 mb-8">Get in Touch</p>
                     <h2 className="text-glow mb-8" style={{
@@ -597,7 +668,7 @@ export default function Page() {
             </section>
 
             {/* Footer */}
-            <footer className="relative z-10 py-12 px-6" style={{ background: 'rgba(6,4,15,0.95)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <footer className="relative z-10 py-8 sm:py-12 px-4 sm:px-6" style={{ background: 'rgba(6,4,15,0.95)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-2 text-xs text-white/30 tracking-widest uppercase">
                     <span>© {new Date().getFullYear()} {d.name}. All Rights Reserved.</span>
                     <span>Designed &amp; Built by {d.name.split(' ')[0]}</span>
