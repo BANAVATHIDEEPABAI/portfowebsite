@@ -402,7 +402,7 @@ export default function Page() {
                         <div className="hero-avatar-card">
                             <div className="hero-glow-ring" />
                             <div className="hero-avatar-inner">
-                                <img src="/MY1.jpeg" alt={d.name} />
+                                <img src="/my2.jpeg" alt={d.name} />
                             </div>
                             <div className="hero-badge">
                                 <span className="hero-badge-dot" />
